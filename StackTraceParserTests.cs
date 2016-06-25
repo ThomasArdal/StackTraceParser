@@ -140,6 +140,30 @@ namespace Tests
             Assert.That(e.ParamName, Is.EqualTo("selector"));
         }
 
+        [Test]
+        public void IsStackTraceFalseOnNull()
+        {
+            Assert.That(StackTraceParser.IsStackTrace(null), Is.False);
+        }
+
+        [Test]
+        public void IsStackTraceFalseOnWhitespace()
+        {
+            Assert.That(StackTraceParser.IsStackTrace(" "), Is.False);
+        }
+
+        [Test]
+        public void IsStackTraceFalseOnNonStackTrace()
+        {
+            Assert.That(StackTraceParser.IsStackTrace("text"), Is.False);
+        }
+
+        [Test]
+        public void IsStackTraceTrueOnStackTrace()
+        {
+            Assert.That(StackTraceParser.IsStackTrace(DotNetStackTrace), Is.True);
+        }
+
         const string DotNetStackTrace = @"
             Elmah.TestException: This is a test exception that can be safely ignored.
                 at Elmah.ErrorLogPageFactory.FindHandler(String name) in C:\ELMAH\src\Elmah\ErrorLogPageFactory.cs:line 126

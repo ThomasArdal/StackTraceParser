@@ -119,6 +119,11 @@ namespace Elmah
                                                           Token(groups["line"], tokenSelector)));
         }
 
+        public static bool IsStackTrace(string text)
+        {
+            return !string.IsNullOrWhiteSpace(text) && Regex.IsMatch(text);
+        }
+
         static T Token<T>(Capture capture, Func<int, int, string, T> tokenSelector)
         {
             return tokenSelector(capture.Index, capture.Length, capture.Value);
